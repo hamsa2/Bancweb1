@@ -11,7 +11,7 @@ import static data.DataGenerator.Registration.getRegisteredUser;
 import static data.DataGenerator.Registration.getUser;
 import static data.DataGenerator.getRandomLogin;
 import static data.DataGenerator.getRandomPassword;
-import static java.nio.channels.Selector.open;
+import static com.codeborne.selenide.Selenide.open;
 
 // спецификация нужна для того, чтобы переиспользовать настройки в разных запросах
 class AuthTest {
@@ -22,11 +22,8 @@ class AuthTest {
         open("http://localhost:9999");
     }
 
-    private void open(String s) {
-    }
 
-
-    @Test
+        @Test
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
         var registeredUser = getRegisteredUser("active");
@@ -45,7 +42,7 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $("button.button").click();
         $("data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
+                .shouldHave(Condition.text("Ошибка! Данный пользователь не зарегестрирован"))
                 .shouldBe((Condition.visible));
 
     }
@@ -57,9 +54,9 @@ class AuthTest {
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
         $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
         $("button.button").click();
-        $("[data-test-id='error-notification'] .notification__content")
+        $("[data-test-id='error- '] .notification__content")
 
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
+                .shouldHave(Condition.text("Ошибка! Пользователь заблокирован"))
                 .shouldBe((Condition.visible));
         }
 
@@ -73,7 +70,7 @@ class AuthTest {
             $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
             $("button.button").click();
             $("[data-test-id='error-notification'] .notification__content")
-                    .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
+                    .shouldHave(Condition.text("Ошибка! Неверный логин"))
                     .shouldBe((Condition.visible));
 
             }
@@ -87,7 +84,7 @@ class AuthTest {
                 $("[data-test-id='password'] input").setValue(wrongPassword);
                 $("button.button").click();
                 $("[data-test-id='error-notification'] .notification__content")
-                        .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
+                        .shouldHave(Condition.text("Ошибка! Неверный пароль"))
                         .shouldBe((Condition.visible));
 
 
