@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static data.DataGenerator.getRandomLogin;
+import static data.DataGenerator.sendRequest;
 import static io.restassured.RestAssured.given;
 
 public class DataGenerator {
@@ -41,7 +43,7 @@ public class DataGenerator {
     private DataGenerator() {
     }
 
-    private static void sendRequest(Registration.RegistrationDto user) {
+    static void sendRequest(Registration.RegistrationDto user) {
         given()
                 .spec(requestSpec)
                 .body(user)
@@ -62,6 +64,7 @@ public class DataGenerator {
         return password;
     }
 
+
     public static class Registration {
         private Registration() {
         }
@@ -77,14 +80,19 @@ public class DataGenerator {
             return registeredUser;
         }
 
+
         @Value
         public static class RegistrationDto {
 
             String login;
+
             String password;
+
             String status;
         }
 
     }
 }
+
+
 

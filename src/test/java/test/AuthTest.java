@@ -13,6 +13,7 @@ import static data.DataGenerator.getRandomLogin;
 import static data.DataGenerator.getRandomPassword;
 import static com.codeborne.selenide.Selenide.open;
 
+
 // спецификация нужна для того, чтобы переиспользовать настройки в разных запросах
 class AuthTest {
 
@@ -23,10 +24,10 @@ class AuthTest {
     }
 
 
-        @Test
+    @Test
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
-        var registeredUser = getRegisteredUser("active");
+        var registeredUser= getRegisteredUser("active");
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $("button.button").click();
@@ -42,13 +43,14 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $("button.button").click();
         $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин и пароль"))
+                .shouldHave(Condition.text("Ошибка! Незарегистрированный пользователь"))
                 .shouldBe((Condition.visible));
 
     }
+
     @Test
-        @DisplayName("Should get error message if login with blocked registered user")
-        void shouldGetErrorIfBlockedUser() {
+    @DisplayName("Should get error message if login with blocked registered user")
+    void shouldGetErrorIfBlockedUser() {
 
         var blockedUser = getRegisteredUser("blocked");
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
@@ -58,42 +60,38 @@ class AuthTest {
 
                 .shouldHave(Condition.text("Ошибка! Пользователь заблокирован"))
                 .shouldBe((Condition.visible));
-        }
+    }
 
 
-        @Test
+    @Test
     @DisplayName("Should get error message if login with wrong login")
-            void shouldGetErrorIfWrongLogin(){
+    void shouldGetErrorIfWrongLogin() {
         var registeredUser = getRegisteredUser("active");
         var wrongLogin = getRandomLogin();
-            $("[data-test-id='login'] input").setValue(wrongLogin);
-            $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
-            $("button.button").click();
-            $("[data-test-id='error-notification'] .notification__content")
-                    .shouldHave(Condition.text("Ошибка! Неверный логин"))
-                    .shouldBe((Condition.visible));
+        $("[data-test-id='login'] input").setValue(wrongLogin);
+        $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
+        $("button.button").click();
+        $("[data-test-id='error-notification'] .notification__content")
+                .shouldHave(Condition.text("Ошибка! Неверный логин"))
+                .shouldBe((Condition.visible));
 
-            }
+    }
 
-            @Test
+    @Test
     @DisplayName("Should get error message if login with wrong password")
-            void shouldGetErrorIfWrongPassword() {
-                var registeredUser = getRegisteredUser("active");
-                var wrongPassword = getRandomPassword();
-                $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
-                $("[data-test-id='password'] input").setValue(wrongPassword);
-                $("button.button").click();
-                $("[data-test-id='error-notification'] .notification__content")
-                        .shouldHave(Condition.text("Ошибка! Неверно указан логин и пароль"))
-                        .shouldBe((Condition.visible));
-
-
-
-
-    }
+    void shouldGetErrorIfWrongPassword() {
+        var registeredUser = getRegisteredUser("active");
+        var wrongPassword = getRandomPassword();
+        $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
+        $("[data-test-id='password'] input").setValue(wrongPassword);
+        $("button.button").click();
+        $("[data-test-id='error-notification'] .notification__content")
+                .shouldHave(Condition.text("Ошибка! Неверный пароль"))
+                .shouldBe((Condition.visible));
 
 
     }
+}
 
 
 
