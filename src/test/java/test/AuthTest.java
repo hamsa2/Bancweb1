@@ -41,7 +41,7 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $("button.button").click();
         $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указн логин и пароль"))
+                .shouldHave(Condition.text("Ошибка! Неверно указн логин или пароль"))
                 .shouldBe((Condition.visible));
     }
 
@@ -83,7 +83,7 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $("button.button").click();
         $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указан логин и пароль"))
+                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
                 .shouldBe((Condition.visible));
 
 
