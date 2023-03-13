@@ -22,6 +22,7 @@ class AuthTest {
     void setup() {
         open("http://localhost:9999");
     }
+
     @Test
     @DisplayName("Should successfully login with active registered user")
     void shouldSuccessfulLoginIfRegisteredActiveUser() {
@@ -41,7 +42,7 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $("button.button").click();
         $("[data-test-id='error-notification'] .notification__content")
-                .shouldHave(Condition.text("Ошибка! Неверно указн логин или пароль"))
+                .shouldHave(Condition.text("Ошибка! Неверно указан логин или пароль"))
                 .shouldBe((Condition.visible));
     }
 
